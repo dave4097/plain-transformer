@@ -1,18 +1,18 @@
 package org.plaintransformer.collection;
 
-import org.plaintransformer.Map;
+import org.plaintransformer.TransformFrom;
 
 import java.math.BigDecimal;
 
 public class OrderItemDTO {
 
-   @Map("#orderItem.productName")
+   @TransformFrom("#orderItem.productName")
    private String productName;
 
-   @Map("#orderItem.price")
+   @TransformFrom("#orderItem.price")
    private BigDecimal price;
 
-   @Map("#orderItem.quantity")
+   @TransformFrom("#orderItem.quantity")
    private int quantity;
 
    public OrderItemDTO() {}

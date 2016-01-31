@@ -17,9 +17,9 @@ public class TransformContext {
    private ExpressionLanguageHandler expressionLanguageHandler;
 
    private TransformContext() {
-      annotationProcessors.add(new MapProcessor());
-      annotationProcessors.add(new MapCollectionProcessor());
-      annotationProcessors.add(new MapEmbeddedProcessor());
+      annotationProcessors.add(new TransformFromProcessor());
+      annotationProcessors.add(new TransformFromCollectionProcessor());
+      annotationProcessors.add(new TransformEmbeddedProcessor());
       expressionLanguageHandler = new SpelHandler();
    }
 

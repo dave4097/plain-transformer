@@ -5,19 +5,19 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 
 /**
- * Processor for the {@link MapCollection} annotation.
+ * Processor for the {@link TransformFromCollection} annotation.
  *
  * @author David H
  */
-public class MapCollectionProcessor extends AnnotationProcessor<MapCollection> {
+public class TransformFromCollectionProcessor extends AnnotationProcessor<TransformFromCollection> {
 
    @Override
-   protected Class<MapCollection> getAnnotationClass() {
-      return MapCollection.class;
+   protected Class<TransformFromCollection> getAnnotationClass() {
+      return TransformFromCollection.class;
    }
 
    @Override
-   protected String getLocator(MapCollection annotation) {
+   protected String getLocator(TransformFromCollection annotation) {
       return annotation.value();
    }
 

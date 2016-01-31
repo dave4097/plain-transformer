@@ -3,19 +3,19 @@ package org.plaintransformer;
 import java.lang.reflect.Field;
 
 /**
- * Processor for the {@link MapEmbedded} annotation.
+ * Processor for the {@link TransformEmbedded} annotation.
  *
  * @author David H
  */
-public class MapEmbeddedProcessor extends AnnotationProcessor<MapEmbedded> {
+public class TransformEmbeddedProcessor extends AnnotationProcessor<TransformEmbedded> {
 
    @Override
-   protected Class<MapEmbedded> getAnnotationClass() {
-      return MapEmbedded.class;
+   protected Class<TransformEmbedded> getAnnotationClass() {
+      return TransformEmbedded.class;
    }
 
    @Override
-   protected String getLocator(MapEmbedded annotation) {
+   protected String getLocator(TransformEmbedded annotation) {
       return annotation.value();
    }
 

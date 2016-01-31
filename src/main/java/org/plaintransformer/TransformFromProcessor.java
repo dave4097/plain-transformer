@@ -3,19 +3,19 @@ package org.plaintransformer;
 import java.lang.reflect.Field;
 
 /**
- * Processor for the {@link Map} annotation.
+ * Processor for the {@link TransformFrom} annotation.
  *
  * @author David H
  */
-public class MapProcessor extends AnnotationProcessor<Map> {
+public class TransformFromProcessor extends AnnotationProcessor<TransformFrom> {
 
    @Override
-   protected Class<Map> getAnnotationClass() {
-      return Map.class;
+   protected Class<TransformFrom> getAnnotationClass() {
+      return TransformFrom.class;
    }
 
    @Override
-   protected String getLocator(Map annotation) {
+   protected String getLocator(TransformFrom annotation) {
       return annotation.value();
    }
 
@@ -29,7 +29,7 @@ public class MapProcessor extends AnnotationProcessor<Map> {
    @SuppressWarnings("unchecked")
    private <T> AttributeTransformer<Object, T> createAttributeTransformer(Field destinationField)
          throws IllegalAccessException, InstantiationException {
-      Map annotation = destinationField.getAnnotationsByType(getAnnotationClass())[0];
+      TransformFrom annotation = destinationField.getAnnotationsByType(getAnnotationClass())[0];
       Class<? extends AttributeTransformer> attributeTransformer = annotation.attributeTransformer();
       return (AttributeTransformer<Object, T>) attributeTransformer.newInstance();
    }

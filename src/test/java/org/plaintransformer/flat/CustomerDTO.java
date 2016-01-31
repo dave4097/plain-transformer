@@ -1,22 +1,22 @@
 package org.plaintransformer.flat;
 
-import org.plaintransformer.Map;
+import org.plaintransformer.TransformFrom;
 
 public class CustomerDTO {
 
-   @Map("#customer.name")
+   @TransformFrom("#customer.name")
    private String name;
 
-   @Map("#customer.address.addressLine1")
+   @TransformFrom("#customer.address.addressLine1")
    private String addressLine1;
 
-   @Map("#customer.address.addressLine2")
+   @TransformFrom("#customer.address.addressLine2")
    private String addressLine2;
 
-   @Map("#customer.address.town")
+   @TransformFrom("#customer.address.town")
    private String town;
 
-   @Map("#customer.address.postcode")
+   @TransformFrom("#customer.address.postcode")
    private String postcode;
 
    public CustomerDTO() {}

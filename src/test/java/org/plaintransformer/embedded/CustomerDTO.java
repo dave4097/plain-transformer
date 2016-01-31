@@ -1,17 +1,17 @@
 package org.plaintransformer.embedded;
 
-import org.plaintransformer.Map;
-import org.plaintransformer.MapEmbedded;
+import org.plaintransformer.TransformFrom;
+import org.plaintransformer.TransformEmbedded;
 
 public class CustomerDTO {
 
-   @Map("#customer.name")
+   @TransformFrom("#customer.name")
    private String name;
 
-   @Map("#customer.age")
+   @TransformFrom("#customer.age")
    private int age;
 
-   @MapEmbedded("#customer.address")
+   @TransformEmbedded("#customer.address")
    private AddressDTO address;
 
    public CustomerDTO() {}

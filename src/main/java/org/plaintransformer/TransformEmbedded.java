@@ -6,15 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to instruct the transformation to apply a transformation on each of the objects contained in
- * the collection attribute.  The class representing the entries in the collection should be annotated
- * with plain-transformer annotations.
+ * Annotation to instruct the transformer to apply a transformation to an attribute. The class representing the
+ * attribute should be annotated with plain-transformer annotations.
  *
  * @author David H
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MapCollection {
+public @interface TransformEmbedded {
 
    /**
     * Returns the expression language locator for the source value to transform.

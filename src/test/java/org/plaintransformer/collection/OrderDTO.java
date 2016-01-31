@@ -1,20 +1,20 @@
 package org.plaintransformer.collection;
 
-import org.plaintransformer.Map;
-import org.plaintransformer.MapCollection;
+import org.plaintransformer.TransformFrom;
+import org.plaintransformer.TransformFromCollection;
 
 import java.util.List;
 import java.util.Set;
 
 public class OrderDTO {
 
-   @Map("#order.customerName")
+   @TransformFrom("#order.customerName")
    private String customerName;
 
-   @MapCollection(value = "#order.orderItemsSet")
+   @TransformFromCollection(value = "#order.orderItemsSet")
    private Set<OrderItemDTO> orderItemsSet;
 
-   @MapCollection(value = "#order.orderItemsList")
+   @TransformFromCollection(value = "#order.orderItemsList")
    private List<OrderItemDTO> orderItemsList;
 
    public OrderDTO() {}

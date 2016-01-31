@@ -4,7 +4,7 @@
 
    <groupId>org.plaintransformer</groupId>
    <artifactId>transformer</artifactId>
-   <packaging>pom</packaging>
+   <packaging>jar</packaging>
    <version>0.1</version>
 
    <name>transformer</name>

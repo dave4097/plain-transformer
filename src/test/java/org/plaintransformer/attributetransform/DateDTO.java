@@ -1,10 +1,10 @@
 package org.plaintransformer.attributetransform;
 
-import org.plaintransformer.Map;
+import org.plaintransformer.TransformFrom;
 
 public class DateDTO {
 
-   @Map(value = "#dateWrapper.date", attributeTransformer = StringToLocalDateTransformer.class)
+   @TransformFrom(value = "#dateWrapper.date", attributeTransformer = StringToLocalDateTransformer.class)
    private String date;
 
    public DateDTO() {}

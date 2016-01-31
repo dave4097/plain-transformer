@@ -1,19 +1,19 @@
 package org.plaintransformer.embedded;
 
-import org.plaintransformer.Map;
+import org.plaintransformer.TransformFrom;
 
 public class AddressDTO {
 
-   @Map("#address.addressLine1")
+   @TransformFrom("#address.addressLine1")
    private String addressLine1;
 
-   @Map("#address.addressLine2")
+   @TransformFrom("#address.addressLine2")
    private String addressLine2;
 
-   @Map("#address.town")
+   @TransformFrom("#address.town")
    private String town;
 
-   @Map("#address.postcode")
+   @TransformFrom("#address.postcode")
    private String postcode;
 
    public AddressDTO() {}
