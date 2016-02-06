@@ -1,6 +1,8 @@
 package org.plaintransformer;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -14,6 +16,7 @@ public class To<T> {
 
    private Class<T> annotatedClass;
    private TransformContext transformContext;
+   private Map<String, String> transformOverrides;
 
    /**
     * Constructor for internal use.
@@ -22,7 +25,19 @@ public class To<T> {
     * @param transformContext The settings for the transformation.
     */
    To(Class<T> annotatedClass, TransformContext transformContext) {
+      this(annotatedClass, new HashMap<>(), transformContext);
+   }
+
+   /**
+    * Constructor for internal use.
+    *
+    * @param annotatedClass The class for the object that results from the transformation.
+    * @param transformOverrides Optional overrides for the attribute mappings.
+    * @param transformContext The settings for the transformation.
+    */
+   To(Class<T> annotatedClass, Map<String, String> transformOverrides, TransformContext transformContext) {
       this.annotatedClass = annotatedClass;
+      this.transformOverrides = transformOverrides;
       this.transformContext = transformContext;
    }
 
@@ -37,7 +52,7 @@ public class To<T> {
       try {
          instance = annotatedClass.newInstance();
          for (AnnotationProcessor annotationProcessor : transformContext.getAnnotationProcessors()) {
-            annotationProcessor.process(transformContext, instance, sources);
+            annotationProcessor.process(transformContext, instance, transformOverrides, sources);
          }
       } catch (Exception e) {
          throw new PlainTransformerException(e);

@@ -5,7 +5,7 @@
    <groupId>org.plaintransformer</groupId>
    <artifactId>transformer</artifactId>
    <packaging>jar</packaging>
-   <version>0.1</version>
+   <version>0.2</version>
 
    <name>transformer</name>
    <url>http://maven.apache.org</url>

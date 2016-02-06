@@ -1,6 +1,11 @@
 package org.plaintransformer;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 /**
  * Processor for the {@link TransformEmbedded} annotation.
@@ -24,7 +29,16 @@ public class TransformEmbeddedProcessor extends AnnotationProcessor<TransformEmb
          throws IllegalAccessException, InstantiationException {
       @SuppressWarnings("unchecked")
       Class<T> type = (Class<T>) destinationField.getType();
-      To<T> to = new To<>(type, context);
+      To<T> to = new To<>(type, getOverrides(destinationField), context);
       return to.from(sourceValue);
+   }
+
+   private Map<String, String> getOverrides(Field field) {
+      if (field.isAnnotationPresent(TransformOverrides.class)) {
+         TransformOverrides overridesAnnotation = field.getAnnotationsByType(TransformOverrides.class)[0];
+         return Arrays.stream(overridesAnnotation.value())
+               .collect(toMap(TransformOverride::attribute, TransformOverride::transformFrom));
+      }
+      return new HashMap<>();
    }
 }

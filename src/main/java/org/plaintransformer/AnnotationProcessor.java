@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,16 +21,17 @@ public abstract class AnnotationProcessor<A extends Annotation> {
     *
     * @param context The transformation settings.
     * @param instance The instance of the class that is the output of transformation.
+    * @param transformOverrides Optional overrides for the attribute mappings.
     * @param sources The objects to transform from.
     * @param <T> The type of the object that is the output of the transformation.
     * @throws IllegalAccessException
     * @throws InstantiationException
     */
-   <T> void process(TransformContext context, T instance, Object... sources)
+   <T> void process(TransformContext context, T instance, Map<String, String> transformOverrides, Object... sources)
          throws IllegalAccessException, InstantiationException {
       List<Field> fields = getAnnotatedFields(instance.getClass());
       for (Field field : fields) {
-         String elLocator = getLocator(field.getAnnotationsByType(getAnnotationClass())[0]);
+         String elLocator = getSourceLocator(transformOverrides, field);
          Object sourceValue = context.getExpressionLanguageHandler().getValue(elLocator, sources);
          if (sourceValue != null) {
             if (!field.isAccessible()) {
@@ -73,5 +75,15 @@ public abstract class AnnotationProcessor<A extends Annotation> {
       return Arrays.stream(clazz.getDeclaredFields())
             .filter(f -> f.isAnnotationPresent(getAnnotationClass()))
             .collect(toList());
+   }
+
+   private String getSourceLocator(Map<String, String> transformOverrides, Field field) {
+      String elLocator;
+      if (transformOverrides != null && transformOverrides.containsKey(field.getName())) {
+         elLocator = transformOverrides.get(field.getName());
+      } else {
+         elLocator = getLocator(field.getAnnotationsByType(getAnnotationClass())[0]);
+      }
+      return elLocator;
    }
 }
