@@ -7,17 +7,33 @@ expression language. By default, the Spring Expression Language (SpEL) is used.
 
 Say you have the a Customer domain object with one String field called customerName. Along with this there is a DTO, 
 CustomerDTO, which correspondingly has a String field called customerName. To use Plain Transformer to transform
-Customer to CustomerDTO, simple annotate the field in the CustomerDTO as follows:
+Customer to CustomerDTO, simple annotate the fields in the CustomerDTO as follows. To transform directly:
 
-    @Map("#customer.customerName")
+    @TransformFrom("#customer.customerName")
     private String customerName;
-      
+    
+If the class level annotation @TransformUsingAnnotationsOnly is not present, then customerName will be transformed
+without the requirement to add the @TransformFrom annotation.
+
+To transform an embedded object and override transformations within, which is optional:
+
+    @TransformEmbedded
+    @TransformOverrides(
+          @TransformOverride(attribute="amount", transformFrom="#customer.totalSold")
+    )
+    private MoneyDTO totalSold;
+          
+To transform a collection of objects to another collection of different objects:
+
+    @TransformFromCollection(value = "#customer.orderItemsList")
+    private List<OrderItemDTO> orderItemsList;
+
 At the moment, you will require a public default constructor in CustomerDTO. Then to perform the transformation, do
 the following:
 
     Transformer.to(CustomerDTO.class).from(myCustomer);
 
-For further examples, please refer to the tests.
+For further examples, refer to the tests.
 
 ## Usage
 
