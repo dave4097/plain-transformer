@@ -9,37 +9,23 @@ import java.util.Map;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Extend this interface to implement an annotation processor. An annotation processor is a class that finds all
+ * Extend this class to implement an annotation processor. An annotation processor is a class that finds all
  * fields in a class that are annotated with a specific annotation and processes them for the transformation.
  *
  * @param <A> The type of the annotation to be processed.
  */
-public abstract class AnnotationProcessor<A extends Annotation> {
+public abstract class AnnotationProcessor<A extends Annotation> extends TransformProcessor {
 
-   /**
-    * Process each field annotated with the annotation in the class that will be the output of the transformation.
-    *
-    * @param context The transformation settings.
-    * @param instance The instance of the class that is the output of transformation.
-    * @param transformOverrides Optional overrides for the attribute mappings.
-    * @param sources The objects to transform from.
-    * @param <T> The type of the object that is the output of the transformation.
-    * @throws IllegalAccessException
-    * @throws InstantiationException
-    */
-   <T> void process(TransformContext context, T instance, Map<String, String> transformOverrides, Object... sources)
-         throws IllegalAccessException, InstantiationException {
-      List<Field> fields = getAnnotatedFields(instance.getClass());
-      for (Field field : fields) {
-         String elLocator = getSourceLocator(transformOverrides, field);
-         Object sourceValue = context.getExpressionLanguageHandler().getValue(elLocator, sources);
-         if (sourceValue != null) {
-            if (!field.isAccessible()) {
-               field.setAccessible(true);
-            }
-            field.set(instance, transform(sourceValue, field, context));
-         }
-      }
+   @Override
+   protected <T> List<Field> getFieldsToProcess(TransformContext context, Class<T> aClass) {
+      return Arrays.stream(aClass.getDeclaredFields())
+            .filter(f -> f.isAnnotationPresent(getAnnotationClass()))
+            .collect(toList());
+   }
+
+   @Override
+   protected String getLocator(TransformContext context, Field field, Object... sources) {
+      return getLocator(field.getAnnotationsByType(getAnnotationClass())[0]);
    }
 
    /**
@@ -56,34 +42,4 @@ public abstract class AnnotationProcessor<A extends Annotation> {
     * @return the expression language string to locate the field to provide a value for transformation.
     */
    protected abstract String getLocator(A annotation);
-
-   /**
-    * Performs the transformation for an annotated filed.
-    *
-    * @param sourceValue The value from he source objects to be set on the result of the transformation.
-    * @param destinationField The field where the value will be set.
-    * @param context The transformation settings.
-    * @param <T> The type of the result of the field transformation.
-    * @return The transformed field value.
-    * @throws IllegalAccessException
-    * @throws InstantiationException
-    */
-   protected abstract <T> T transform(Object sourceValue, Field destinationField, TransformContext context)
-         throws IllegalAccessException, InstantiationException;
-
-   private <T> List<Field> getAnnotatedFields(Class<T> clazz) {
-      return Arrays.stream(clazz.getDeclaredFields())
-            .filter(f -> f.isAnnotationPresent(getAnnotationClass()))
-            .collect(toList());
-   }
-
-   private String getSourceLocator(Map<String, String> transformOverrides, Field field) {
-      String elLocator;
-      if (transformOverrides != null && transformOverrides.containsKey(field.getName())) {
-         elLocator = transformOverrides.get(field.getName());
-      } else {
-         elLocator = getLocator(field.getAnnotationsByType(getAnnotationClass())[0]);
-      }
-      return elLocator;
-   }
 }

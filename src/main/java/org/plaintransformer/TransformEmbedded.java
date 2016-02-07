@@ -20,5 +20,5 @@ public @interface TransformEmbedded {
     *
     * @return the expression language locator for the source value to transform.
     */
-   String value();
+   String value() default "";
 }

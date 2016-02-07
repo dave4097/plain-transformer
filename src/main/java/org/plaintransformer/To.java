@@ -17,6 +17,7 @@ public class To<T> {
    private Class<T> annotatedClass;
    private TransformContext transformContext;
    private Map<String, String> transformOverrides;
+   private NonAnnotatedFieldsProcessor nonAnnotatedFieldsProcessor;
 
    /**
     * Constructor for internal use.
@@ -39,6 +40,7 @@ public class To<T> {
       this.annotatedClass = annotatedClass;
       this.transformOverrides = transformOverrides;
       this.transformContext = transformContext;
+      this.nonAnnotatedFieldsProcessor = new NonAnnotatedFieldsProcessor();
    }
 
    /**
@@ -54,6 +56,7 @@ public class To<T> {
          for (AnnotationProcessor annotationProcessor : transformContext.getAnnotationProcessors()) {
             annotationProcessor.process(transformContext, instance, transformOverrides, sources);
          }
+         nonAnnotatedFieldsProcessor.process(transformContext, instance, transformOverrides, sources);
       } catch (Exception e) {
          throw new PlainTransformerException(e);
       }

@@ -7,19 +7,17 @@ import org.plaintransformer.TransformOverrides;
 
 public class CustomerDTO {
 
-   @TransformFrom("#customer.name")
    private String name;
 
-   @TransformFrom("#customer.age")
    private int age;
 
    @TransformEmbedded("#customer.address")
    private AddressDTO address;
 
-   @TransformEmbedded("#customer")
+   @TransformEmbedded
    private MoneyDTO totalSpend;
 
-   @TransformEmbedded("#customer")
+   @TransformEmbedded
    @TransformOverrides(
          @TransformOverride(attribute="amount", transformFrom="#customer.totalSold")
    )

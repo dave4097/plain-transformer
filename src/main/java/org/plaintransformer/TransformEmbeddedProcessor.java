@@ -25,12 +25,12 @@ public class TransformEmbeddedProcessor extends AnnotationProcessor<TransformEmb
    }
 
    @Override
-   protected <T> T transform(Object sourceValue, Field destinationField, TransformContext context)
+   protected <T> T transform(TransformContext context, Field destinationField, Object... sourceValues)
          throws IllegalAccessException, InstantiationException {
       @SuppressWarnings("unchecked")
       Class<T> type = (Class<T>) destinationField.getType();
       To<T> to = new To<>(type, getOverrides(destinationField), context);
-      return to.from(sourceValue);
+      return to.from(sourceValues);
    }
 
    private Map<String, String> getOverrides(Field field) {

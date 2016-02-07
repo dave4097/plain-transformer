@@ -20,10 +20,10 @@ public class TransformFromProcessor extends AnnotationProcessor<TransformFrom> {
    }
 
    @Override
-   protected <T> T transform(Object sourceValue, Field destinationField, TransformContext context)
+   protected <T> T transform(TransformContext context, Field destinationField, Object... sourceValues)
          throws IllegalAccessException, InstantiationException {
       AttributeTransformer<Object, T> attributeTransformer = createAttributeTransformer(destinationField);
-      return attributeTransformer.transform(sourceValue);
+      return attributeTransformer.transform(sourceValues[0]);
    }
 
    @SuppressWarnings("unchecked")

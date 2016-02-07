@@ -27,6 +27,11 @@ public class SpelHandler implements ExpressionLanguageHandler {
       return parser.parseExpression(expression).getValue(context);
    }
 
+   @Override
+   public String createLocator(Class c, String fieldName) {
+      return "#" + adaptClassName(c) + "." + fieldName;
+   }
+
    private StandardEvaluationContext createStandardEvaluationContext(Object... sources) {
       StandardEvaluationContext context = new StandardEvaluationContext();
       context.setVariables(createSourcesMap(sources));
@@ -36,8 +41,12 @@ public class SpelHandler implements ExpressionLanguageHandler {
    private Map<String, Object> createSourcesMap(Object... sources) {
       Map<String, Object> sourcesMap = new HashMap<>();
       for (Object o : sources) {
-         sourcesMap.put(Introspector.decapitalize(o.getClass().getSimpleName()), o);
+         sourcesMap.put(adaptClassName(o.getClass()), o);
       }
       return sourcesMap;
+   }
+
+   private String adaptClassName(Class c) {
+      return Introspector.decapitalize(c.getSimpleName());
    }
 }

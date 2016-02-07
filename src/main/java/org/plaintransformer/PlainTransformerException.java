@@ -11,6 +11,10 @@ public class PlainTransformerException extends RuntimeException {
       super(cause);
    }
 
+   public PlainTransformerException(String message) {
+      super(message);
+   }
+
    public PlainTransformerException(String message, Throwable cause) {
       super(message, cause);
    }

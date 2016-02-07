@@ -15,4 +15,15 @@ public interface ExpressionLanguageHandler {
     * @return the value of a field within one of the given source objects using the given expression.
     */
    Object getValue(String expression, Object... sources);
+
+   /**
+    * Returns an expression conforming to the expression language which is to access a field
+    * in the given class.
+    *
+    * @param c The class on which the expression will be created.
+    * @param fieldName The name of the filed being accessed/used.
+    * @return an expression conforming to the expression language which is to access a field
+    * in the given class.
+    */
+   String createLocator(Class c, String fieldName);
 }

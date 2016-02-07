@@ -23,9 +23,9 @@ public class TransformFromCollectionProcessor extends AnnotationProcessor<Transf
 
    @Override
    @SuppressWarnings("unchecked")
-   protected Collection<Object> transform(Object sourceValue, Field destinationField, TransformContext context)
+   protected Collection<Object> transform(TransformContext context, Field destinationField, Object... sourceValues)
          throws IllegalAccessException, InstantiationException {
-      Collection collectionToTransform = (Collection) sourceValue;
+      Collection collectionToTransform = (Collection) sourceValues[0];
 
       Collection<Object> transformedCollection = null;
       if (collectionToTransform != null) {
