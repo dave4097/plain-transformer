@@ -1,7 +1,9 @@
 package org.plaintransformer.flat;
 
 import org.plaintransformer.TransformFrom;
+import org.plaintransformer.TransformUsingAnnotationsOnly;
 
+@TransformUsingAnnotationsOnly
 public class CustomerDTO {
 
    @TransformFrom("#customer.name")
@@ -19,14 +21,17 @@ public class CustomerDTO {
    @TransformFrom("#customer.address.postcode")
    private String postcode;
 
+   private String nickName;
+
    public CustomerDTO() {}
 
-   public CustomerDTO(String name, String addressLine1, String addressLine2, String town, String postcode) {
+   public CustomerDTO(String name, String addressLine1, String addressLine2, String town, String postcode, String nickName) {
       this.name = name;
       this.addressLine1 = addressLine1;
       this.addressLine2 = addressLine2;
       this.town = town;
       this.postcode = postcode;
+      this.nickName = nickName;
    }
 
    public String getName() {
@@ -47,5 +52,9 @@ public class CustomerDTO {
 
    public String getPostcode() {
       return postcode;
+   }
+
+   public String getNickName() {
+      return nickName;
    }
 }

@@ -2,6 +2,7 @@ package org.plaintransformer;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -10,6 +11,9 @@ class NonAnnotatedFieldsProcessor extends TransformProcessor {
 
    @Override
    protected <T> List<Field> getFieldsToProcess(TransformContext context, Class<T> aClass) {
+      if (aClass.isAnnotationPresent(TransformUsingAnnotationsOnly.class)) {
+         return Collections.emptyList();
+      }
       return Arrays.stream(aClass.getDeclaredFields())
             .filter(f -> hasNoTransformAnnotation(f, context))
             .collect(toList());
@@ -22,7 +26,7 @@ class NonAnnotatedFieldsProcessor extends TransformProcessor {
             .map(Object::getClass)
             .collect(toList());
       if (classes.isEmpty()) {
-         return null;
+         return "";
       } else if (classes.size() == 1) {
          return context.getExpressionLanguageHandler().createLocator(classes.get(0), field.getName());
       } else {

@@ -4,10 +4,12 @@ public class Customer {
 
    private String name;
    private Address address;
+   private String nickName;
 
-   public Customer(String name, Address address) {
+   public Customer(String name, Address address, String nickName) {
       this.name = name;
       this.address = address;
+      this.nickName = nickName;
    }
 
    public String getName() {
@@ -16,5 +18,9 @@ public class Customer {
 
    public Address getAddress() {
       return address;
+   }
+
+   public String getNickName() {
+      return nickName;
    }
 }
