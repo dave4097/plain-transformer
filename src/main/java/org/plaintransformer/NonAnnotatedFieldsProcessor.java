@@ -36,7 +36,8 @@ class NonAnnotatedFieldsProcessor extends TransformProcessor {
 
    @Override
    @SuppressWarnings("unchecked")
-   protected Object transform(TransformContext context, Field destinationField, Object... sourceValues) throws IllegalAccessException, InstantiationException {
+   protected Object transform(TransformContext context, Field destinationField, AttributeTransformData transformOverride, Object... sourceValues)
+         throws IllegalAccessException, InstantiationException {
       return sourceValues[0];
    }
 

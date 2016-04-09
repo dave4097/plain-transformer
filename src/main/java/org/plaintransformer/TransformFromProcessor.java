@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
  *
  * @author David H
  */
-public class TransformFromProcessor extends AnnotationProcessor<TransformFrom> {
+class TransformFromProcessor extends AnnotationProcessor<TransformFrom> {
 
    @Override
    protected Class<TransformFrom> getAnnotationClass() {
@@ -20,17 +20,20 @@ public class TransformFromProcessor extends AnnotationProcessor<TransformFrom> {
    }
 
    @Override
-   protected <T> T transform(TransformContext context, Field destinationField, Object... sourceValues)
+   protected Object transform(TransformContext context, Field destinationField, AttributeTransformData transformOverride, Object... sourceValues)
          throws IllegalAccessException, InstantiationException {
-      AttributeTransformer<Object, T> attributeTransformer = createAttributeTransformer(destinationField);
+      AttributeTransformer<Object, Object> attributeTransformer = createAttributeTransformer(destinationField, transformOverride);
       return attributeTransformer.transform(sourceValues[0]);
    }
 
    @SuppressWarnings("unchecked")
-   private <T> AttributeTransformer<Object, T> createAttributeTransformer(Field destinationField)
+   private AttributeTransformer<Object, Object> createAttributeTransformer(Field destinationField, AttributeTransformData transformOverride)
          throws IllegalAccessException, InstantiationException {
       TransformFrom annotation = destinationField.getAnnotationsByType(getAnnotationClass())[0];
       Class<? extends AttributeTransformer> attributeTransformer = annotation.attributeTransformer();
-      return (AttributeTransformer<Object, T>) attributeTransformer.newInstance();
+      if (transformOverride != null) {
+         attributeTransformer = transformOverride.getAttributeTransformer();
+      }
+      return attributeTransformer.newInstance();
    }
 }

@@ -9,7 +9,7 @@ import java.util.Map;
  *
  * @author David H
  */
-public abstract class TransformProcessor {
+abstract class TransformProcessor {
 
    /**
     * Process each field annotated with the annotation in the class that will be the output of the transformation.
@@ -22,16 +22,20 @@ public abstract class TransformProcessor {
     * @throws IllegalAccessException
     * @throws InstantiationException
     */
-   <T> void process(TransformContext context, T instance, Map<String, String> transformOverrides, Object... sources)
+   <T> void process(TransformContext context,
+                    T instance,
+                    Map<String, AttributeTransformData> transformOverrides,
+                    Object... sources)
          throws IllegalAccessException, InstantiationException {
       for (Field field : getFieldsToProcess(context, instance.getClass())) {
-         String elLocator = getSourceLocator(context, transformOverrides, field, sources);
+         AttributeTransformData transformOverride = transformOverrides.get(field.getName());
+         String elLocator = getSourceLocator(context, transformOverride, field, sources);
          Object[] sourceValues = getSourceValues(context, elLocator, sources);
          if (sourceValues.length != 0) {
             if (!field.isAccessible()) {
                field.setAccessible(true);
             }
-            field.set(instance, transform(context, field, sourceValues));
+            field.set(instance, transform(context, field, transformOverride, sourceValues));
          }
       }
    }
@@ -59,7 +63,6 @@ public abstract class TransformProcessor {
    /**
     * Performs the transformation for an annotated filed.
     *
-    * @param <T> The type of the result of the field transformation.
     * @param context The transformation settings.
     * @param destinationField The field where the value will be set.
     * @param sourceValues The values from the source objects to be set on the result of the transformation.
@@ -67,13 +70,13 @@ public abstract class TransformProcessor {
     * @throws IllegalAccessException
     * @throws InstantiationException
     */
-   protected abstract <T> T transform(TransformContext context, Field destinationField, Object... sourceValues)
+   protected abstract Object transform(TransformContext context, Field destinationField, AttributeTransformData transformOverride, Object... sourceValues)
          throws IllegalAccessException, InstantiationException;
 
-   private String getSourceLocator(TransformContext context, Map<String, String> transformOverrides, Field field, Object... sources) {
+   private String getSourceLocator(TransformContext context, AttributeTransformData transformOverride, Field field, Object... sources) {
       String elLocator;
-      if (transformOverrides != null && transformOverrides.containsKey(field.getName())) {
-         elLocator = transformOverrides.get(field.getName());
+      if (transformOverride != null) {
+         elLocator = transformOverride.getTransformFrom();
       } else {
          elLocator = getLocator(context, field, sources);
       }

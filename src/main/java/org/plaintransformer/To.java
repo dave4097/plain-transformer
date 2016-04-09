@@ -16,7 +16,7 @@ public class To<T> {
 
    private Class<T> annotatedClass;
    private TransformContext transformContext;
-   private Map<String, String> transformOverrides;
+   private Map<String, AttributeTransformData> transformOverrides;
    private NonAnnotatedFieldsProcessor nonAnnotatedFieldsProcessor;
 
    /**
@@ -36,7 +36,7 @@ public class To<T> {
     * @param transformOverrides Optional overrides for the attribute mappings.
     * @param transformContext The settings for the transformation.
     */
-   To(Class<T> annotatedClass, Map<String, String> transformOverrides, TransformContext transformContext) {
+   To(Class<T> annotatedClass, Map<String, AttributeTransformData> transformOverrides, TransformContext transformContext) {
       this.annotatedClass = annotatedClass;
       this.transformOverrides = transformOverrides;
       this.transformContext = transformContext;

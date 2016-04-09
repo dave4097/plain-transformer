@@ -25,4 +25,11 @@ public @interface TransformOverride {
     * @return an override of the expression language locator for the source value to transform.
     */
    String transformFrom();
+
+   /**
+    * Returns an override of the custom transformer to map the field.
+    *
+    * @return an override of the custom transformer to map the field.
+    */
+   Class<? extends AttributeTransformer> attributeTransformer() default DefaultAttributeTransformer.class;
 }

@@ -9,7 +9,7 @@ import java.util.Collection;
  *
  * @author David H
  */
-public class TransformFromCollectionProcessor extends AnnotationProcessor<TransformFromCollection> {
+class TransformFromCollectionProcessor extends AnnotationProcessor<TransformFromCollection> {
 
    @Override
    protected Class<TransformFromCollection> getAnnotationClass() {
@@ -23,7 +23,7 @@ public class TransformFromCollectionProcessor extends AnnotationProcessor<Transf
 
    @Override
    @SuppressWarnings("unchecked")
-   protected Collection<Object> transform(TransformContext context, Field destinationField, Object... sourceValues)
+   protected Collection<Object> transform(TransformContext context, Field destinationField, AttributeTransformData transformOverride, Object... sourceValues)
          throws IllegalAccessException, InstantiationException {
       Collection collectionToTransform = (Collection) sourceValues[0];
 
