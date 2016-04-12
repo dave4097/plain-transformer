@@ -21,16 +21,13 @@ class NonAnnotatedFieldsProcessor extends TransformProcessor {
 
    @Override
    protected String getLocator(TransformContext context, Field field, Object... sources) {
-      List<Class<?>> classes = Arrays.stream(sources)
-            .filter(s -> hasField(s.getClass(), field.getName()))
-            .map(Object::getClass)
-            .collect(toList());
-      if (classes.isEmpty()) {
+      if (sources.length == 0) {
          return "";
-      } else if (classes.size() == 1) {
-         return context.getExpressionLanguageHandler().createLocator(classes.get(0), field.getName(), false);
+      } else if (sources.length == 1) {
+         return context.getExpressionLanguageHandler().createLocator(sources[0].getClass(), field.getName(), false);
       } else {
-         throw new PlainTransformerException("Multiple possible sources for field " + field.getName() + ": " + classes);
+         throw new PlainTransformerException("Multiple possible sources for field " + field.getName() +
+               ", numSources=" + sources.length);
       }
    }
 
@@ -48,11 +45,5 @@ class NonAnnotatedFieldsProcessor extends TransformProcessor {
          }
       }
       return true;
-   }
-
-   private boolean hasField(Class c, String fieldName) {
-      return Arrays.stream(c.getDeclaredFields())
-            .map(Field::getName)
-            .anyMatch(n -> n.equals(fieldName));
    }
 }
