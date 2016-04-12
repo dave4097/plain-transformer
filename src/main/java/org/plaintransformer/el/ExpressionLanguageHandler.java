@@ -22,8 +22,10 @@ public interface ExpressionLanguageHandler {
     *
     * @param c The class on which the expression will be created.
     * @param fieldName The name of the filed being accessed/used.
+    * @param multipleSources True if the locator expression is to be used to locate a field
+    *                        over more than one class.
     * @return an expression conforming to the expression language which is to access a field
     * in the given class.
     */
-   String createLocator(Class c, String fieldName);
+   String createLocator(Class c, String fieldName, boolean multipleSources);
 }

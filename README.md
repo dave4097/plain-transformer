@@ -9,7 +9,7 @@ Say you have the a Customer domain object with one String field called customerN
 CustomerDTO, which correspondingly has a String field called customerName. To use Plain Transformer to transform
 Customer to CustomerDTO, simple annotate the fields in the CustomerDTO as follows. To transform directly:
 
-    @TransformFrom("#customer.customerName")
+    @TransformFrom("#customerName")
     private String customerName;
     
 If the class level annotation @TransformUsingAnnotationsOnly is not present, then customerName will be transformed
@@ -19,13 +19,13 @@ To transform an embedded object and override transformations within, which is op
 
     @TransformEmbedded
     @TransformOverrides(
-          @TransformOverride(attribute="amount", transformFrom="#customer.totalSold")
+          @TransformOverride(attribute="amount", transformFrom="#totalSold")
     )
     private MoneyDTO totalSold;
           
 To transform a collection of objects to another collection of different objects:
 
-    @TransformFromCollection(value = "#customer.orderItemsList")
+    @TransformFromCollection(value = "#orderItemsList")
     private List<OrderItemDTO> orderItemsList;
 
 At the moment, you will require a public default constructor in CustomerDTO. Then to perform the transformation, do

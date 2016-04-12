@@ -6,19 +6,19 @@ import org.plaintransformer.TransformUsingAnnotationsOnly;
 @TransformUsingAnnotationsOnly
 public class CustomerDTO {
 
-   @TransformFrom("#customer.name")
+   @TransformFrom("#name")
    private String name;
 
-   @TransformFrom("#customer.address.addressLine1")
+   @TransformFrom("#address.addressLine1")
    private String addressLine1;
 
-   @TransformFrom("#customer.address.addressLine2")
+   @TransformFrom("#address.addressLine2")
    private String addressLine2;
 
-   @TransformFrom("#customer.address.town")
+   @TransformFrom("#address.town")
    private String town;
 
-   @TransformFrom("#customer.address.postcode")
+   @TransformFrom("#address.postcode")
    private String postcode;
 
    private String nickName;

@@ -6,10 +6,10 @@ import java.math.BigDecimal;
 
 public class MoneyDTO {
 
-   @TransformFrom("#customer.currency")
+   @TransformFrom("#currency")
    private String currency;
 
-   @TransformFrom("#customer.totalSpend")
+   @TransformFrom("#totalSpend")
    private BigDecimal amount;
 
    public MoneyDTO() {}

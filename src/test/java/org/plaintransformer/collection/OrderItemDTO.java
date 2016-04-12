@@ -6,13 +6,13 @@ import java.math.BigDecimal;
 
 public class OrderItemDTO {
 
-   @TransformFrom("#orderItem.productName")
+   @TransformFrom("#productName")
    private String productName;
 
-   @TransformFrom("#orderItem.price")
+   @TransformFrom("#price")
    private BigDecimal price;
 
-   @TransformFrom("#orderItem.quantity")
+   @TransformFrom("#quantity")
    private int quantity;
 
    public OrderItemDTO() {}

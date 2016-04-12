@@ -4,16 +4,16 @@ import org.plaintransformer.TransformFrom;
 
 public class AddressDTO {
 
-   @TransformFrom("#address.addressLine1")
+   @TransformFrom("#addressLine1")
    private String addressLine1;
 
-   @TransformFrom("#address.addressLine2")
+   @TransformFrom("#addressLine2")
    private String addressLine2;
 
-   @TransformFrom("#address.town")
+   @TransformFrom("#town")
    private String town;
 
-   @TransformFrom("#address.postcode")
+   @TransformFrom("#postcode")
    private String postcode;
 
    public AddressDTO() {}

@@ -28,7 +28,7 @@ class NonAnnotatedFieldsProcessor extends TransformProcessor {
       if (classes.isEmpty()) {
          return "";
       } else if (classes.size() == 1) {
-         return context.getExpressionLanguageHandler().createLocator(classes.get(0), field.getName());
+         return context.getExpressionLanguageHandler().createLocator(classes.get(0), field.getName(), false);
       } else {
          throw new PlainTransformerException("Multiple possible sources for field " + field.getName() + ": " + classes);
       }

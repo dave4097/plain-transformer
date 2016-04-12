@@ -8,13 +8,13 @@ import java.util.Set;
 
 public class OrderDTO {
 
-   @TransformFrom("#order.customerName")
+   @TransformFrom("#customerName")
    private String customerName;
 
-   @TransformFromCollection(value = "#order.orderItemsSet")
+   @TransformFromCollection(value = "#orderItemsSet")
    private Set<OrderItemDTO> orderItemsSet;
 
-   @TransformFromCollection(value = "#order.orderItemsList")
+   @TransformFromCollection(value = "#orderItemsList")
    private List<OrderItemDTO> orderItemsList;
 
    public OrderDTO() {}

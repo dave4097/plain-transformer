@@ -11,7 +11,7 @@ public class CustomerDTO {
 
    private int age;
 
-   @TransformEmbedded("#customer.address")
+   @TransformEmbedded("#address")
    private AddressDTO address;
 
    @TransformEmbedded
@@ -19,7 +19,7 @@ public class CustomerDTO {
 
    @TransformEmbedded
    @TransformOverrides(
-         @TransformOverride(attribute="amount", transformFrom="#customer.totalSold")
+         @TransformOverride(attribute="amount", transformFrom="#totalSold")
    )
    private MoneyDTO totalSold;
 
