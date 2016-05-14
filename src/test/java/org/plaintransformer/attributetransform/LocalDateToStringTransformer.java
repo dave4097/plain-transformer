@@ -7,9 +7,9 @@ import java.time.format.DateTimeFormatter;
 
 public class LocalDateToStringTransformer implements AttributeTransformer<LocalDate, String> {
 
-   private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+   private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
    public String transform(LocalDate date) {
-      return date.format(formatter);
+      return date.format(FORMATTER);
    }
 }

@@ -4,11 +4,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Extend this class to implement an annotation processor. An annotation processor is a class that finds all

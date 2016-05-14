@@ -1,6 +1,5 @@
 package org.plaintransformer.embedded;
 
-import org.plaintransformer.TransformFrom;
 import org.plaintransformer.TransformEmbedded;
 import org.plaintransformer.TransformOverride;
 import org.plaintransformer.TransformOverrides;

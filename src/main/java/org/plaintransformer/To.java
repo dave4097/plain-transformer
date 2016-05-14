@@ -14,10 +14,10 @@ import static java.util.stream.Collectors.toSet;
  */
 public class To<T> {
 
-   private Class<T> annotatedClass;
-   private TransformConfig transformConfig;
-   private Map<String, AttributeTransformData> transformOverrides;
-   private NonAnnotatedFieldsProcessor nonAnnotatedFieldsProcessor;
+   private final Class<T> annotatedClass;
+   private final TransformConfig transformConfig;
+   private final Map<String, AttributeTransformData> transformOverrides;
+   private final NonAnnotatedFieldsProcessor nonAnnotatedFieldsProcessor;
 
    /**
     * Constructor for internal use.

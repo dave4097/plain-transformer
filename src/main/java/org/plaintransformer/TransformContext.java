@@ -10,8 +10,8 @@ import java.util.Set;
  */
 public class TransformContext {
 
-   private TransformConfig transformConfig;
-   private Set<String> fieldsTransformed;
+   private final TransformConfig transformConfig;
+   private final Set<String> fieldsTransformed;
 
    public TransformContext(TransformConfig transformConfig) {
       this.transformConfig = transformConfig;

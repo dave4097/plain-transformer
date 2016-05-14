@@ -11,12 +11,12 @@ import java.util.Set;
  */
 public class TransformConfig {
 
-   private Set<AnnotationProcessor> annotationProcessors = new HashSet<>();
-   private ExpressionLanguageHandler expressionLanguageHandler;
-   private boolean transformAnnotatedFieldsOnly;
+   private final Set<AnnotationProcessor> annotationProcessors;
+   private final ExpressionLanguageHandler expressionLanguageHandler;
+   private final boolean transformAnnotatedFieldsOnly;
 
    private TransformConfig(Builder builder) {
-      this.annotationProcessors = builder.annotationProcessors;
+      this.annotationProcessors = new HashSet<>(builder.annotationProcessors);
       this.expressionLanguageHandler = builder.expressionLanguageHandler;
       this.transformAnnotatedFieldsOnly = builder.transformAnnotatedFieldsOnly;
    }
@@ -110,11 +110,10 @@ public class TransformConfig {
        * Set to true if only fields that are annotated should be transformed. If set to false (default)
        * then Plain Transformer will attempt transform all fields.
        *
-       * @param val true if only fields that are annotated should be transformed, false otherwise.
        * @return The config builder.
        */
-      public Builder transformAnnotatedFieldsOnly(boolean val) {
-         this.transformAnnotatedFieldsOnly = val;
+      public Builder transformAnnotatedFieldsOnly() {
+         this.transformAnnotatedFieldsOnly = true;
          return this;
       }
 

@@ -3,7 +3,6 @@ package org.plaintransformer.el;
 import org.plaintransformer.PlainTransformerException;
 import org.springframework.expression.EvaluationException;
 import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.ParseException;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
@@ -11,7 +10,6 @@ import java.beans.Introspector;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -25,7 +23,7 @@ public class SpelHandler implements ExpressionLanguageHandler {
    private static final String DEFAULT_KEY = "source";
    private static final String DEFAULT_PREFIX = "#" + DEFAULT_KEY;
 
-   private ExpressionParser parser;
+   private final ExpressionParser parser;
 
    public SpelHandler() {
       parser = new SpelExpressionParser();

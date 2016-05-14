@@ -7,8 +7,6 @@ package org.plaintransformer;
  */
 class DefaultAttributeTransformer implements AttributeTransformer<Object, Object> {
 
-   DefaultAttributeTransformer() {}
-
    @Override
    public Object transform(Object value) {
       return value;

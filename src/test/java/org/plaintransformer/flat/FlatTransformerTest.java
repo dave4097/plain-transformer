@@ -18,7 +18,7 @@ public class FlatTransformerTest {
       Address address = new Address("line1", "line2", "town", "123");
       Customer customer = new Customer("Dave", address, "nickName");
 
-      TransformConfig transformConfig = new TransformConfig.Builder().transformAnnotatedFieldsOnly(true).build();
+      TransformConfig transformConfig = new TransformConfig.Builder().transformAnnotatedFieldsOnly().build();
 
       CustomerDTO dto = Transform.to(CustomerDTO.class, transformConfig).from(customer);
 
