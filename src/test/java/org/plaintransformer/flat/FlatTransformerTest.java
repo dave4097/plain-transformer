@@ -2,6 +2,7 @@ package org.plaintransformer.flat;
 
 import org.junit.Test;
 import org.plaintransformer.Transform;
+import org.plaintransformer.TransformConfig;
 
 import java.util.Collection;
 
@@ -17,7 +18,9 @@ public class FlatTransformerTest {
       Address address = new Address("line1", "line2", "town", "123");
       Customer customer = new Customer("Dave", address, "nickName");
 
-      CustomerDTO dto = Transform.to(CustomerDTO.class).from(customer);
+      TransformConfig transformConfig = new TransformConfig.Builder().transformAnnotatedFieldsOnly(true).build();
+
+      CustomerDTO dto = Transform.to(CustomerDTO.class, transformConfig).from(customer);
 
       assertThat(dto.getName(), is("Dave"));
       assertThat(dto.getAddressLine1(), is("line1"));

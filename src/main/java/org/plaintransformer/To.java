@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toSet;
 public class To<T> {
 
    private Class<T> annotatedClass;
-   private TransformContext transformContext;
+   private TransformConfig transformConfig;
    private Map<String, AttributeTransformData> transformOverrides;
    private NonAnnotatedFieldsProcessor nonAnnotatedFieldsProcessor;
 
@@ -23,10 +23,10 @@ public class To<T> {
     * Constructor for internal use.
     *
     * @param annotatedClass The class for the object that results from the transformation.
-    * @param transformContext The settings for the transformation.
+    * @param transformConfig The settings for the transformation.
     */
-   To(Class<T> annotatedClass, TransformContext transformContext) {
-      this(annotatedClass, new HashMap<>(), transformContext);
+   To(Class<T> annotatedClass, TransformConfig transformConfig) {
+      this(annotatedClass, new HashMap<>(), transformConfig);
    }
 
    /**
@@ -34,12 +34,12 @@ public class To<T> {
     *
     * @param annotatedClass The class for the object that results from the transformation.
     * @param transformOverrides Optional overrides for the attribute mappings.
-    * @param transformContext The settings for the transformation.
+    * @param transformConfig The settings for the transformation.
     */
-   To(Class<T> annotatedClass, Map<String, AttributeTransformData> transformOverrides, TransformContext transformContext) {
+   To(Class<T> annotatedClass, Map<String, AttributeTransformData> transformOverrides, TransformConfig transformConfig) {
       this.annotatedClass = annotatedClass;
       this.transformOverrides = transformOverrides;
-      this.transformContext = transformContext;
+      this.transformConfig = transformConfig;
       this.nonAnnotatedFieldsProcessor = new NonAnnotatedFieldsProcessor();
    }
 
@@ -52,11 +52,12 @@ public class To<T> {
    public final T from(Object... sources) {
       T instance;
       try {
+         TransformContext context = new TransformContext(transformConfig);
          instance = annotatedClass.newInstance();
-         for (AnnotationProcessor annotationProcessor : transformContext.getAnnotationProcessors()) {
-            annotationProcessor.process(transformContext, instance, transformOverrides, sources);
+         for (AnnotationProcessor annotationProcessor : transformConfig.getAnnotationProcessors()) {
+            annotationProcessor.process(context, instance, transformOverrides, sources);
          }
-         nonAnnotatedFieldsProcessor.process(transformContext, instance, transformOverrides, sources);
+         nonAnnotatedFieldsProcessor.process(context, instance, transformOverrides, sources);
       } catch (Exception e) {
          throw new PlainTransformerException(e);
       }

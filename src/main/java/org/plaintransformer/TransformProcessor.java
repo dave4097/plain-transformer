@@ -1,5 +1,7 @@
 package org.plaintransformer;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
+
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ abstract class TransformProcessor {
    /**
     * Process each field annotated with the annotation in the class that will be the output of the transformation.
     *
-    * @param context The transformation settings.
+    * @param context The transformation context.
     * @param instance The instance of the class that is the output of transformation.
     * @param transformOverrides Optional overrides for the attribute mappings.
     * @param sources The objects to transform from.
@@ -27,16 +29,17 @@ abstract class TransformProcessor {
                     Map<String, AttributeTransformData> transformOverrides,
                     Object... sources)
          throws IllegalAccessException, InstantiationException {
-      for (Field field : getFieldsToProcess(context, instance.getClass())) {
-         AttributeTransformData transformOverride = transformOverrides.get(field.getName());
+      List<Field> fieldsToProcess = getFieldsToProcess(context, instance.getClass());
+      for (Field field : fieldsToProcess) {
+         String fieldName = field.getName();
+         AttributeTransformData transformOverride = transformOverrides.get(fieldName);
          String elLocator = getSourceLocator(context, transformOverride, field, sources);
          Object[] sourceValues = getSourceValues(context, elLocator, sources);
          if (sourceValues.length != 0) {
-            if (!field.isAccessible()) {
-               field.setAccessible(true);
-            }
-            field.set(instance, transform(context, field, transformOverride, sourceValues));
+            Object value = transform(context, field, transformOverride, sourceValues);
+            FieldUtils.writeDeclaredField(instance, fieldName, value, true);
          }
+         context.addTransformedFieldName(fieldName);
       }
    }
 
@@ -87,6 +90,6 @@ abstract class TransformProcessor {
       if ("".equals(elLocator)) {
          return sources;
       }
-      return new Object[]{context.getExpressionLanguageHandler().getValue(elLocator, sources)};
+      return new Object[]{context.config().getExpressionLanguageHandler().getValue(elLocator, sources)};
    }
 }

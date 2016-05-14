@@ -1,5 +1,7 @@
 package org.plaintransformer;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -18,9 +20,7 @@ public abstract class AnnotationProcessor<A extends Annotation> extends Transfor
 
    @Override
    protected <T> List<Field> getFieldsToProcess(TransformContext context, Class<T> aClass) {
-      return Arrays.stream(aClass.getDeclaredFields())
-            .filter(f -> f.isAnnotationPresent(getAnnotationClass()))
-            .collect(toList());
+      return FieldUtils.getFieldsListWithAnnotation(aClass, getAnnotationClass());
    }
 
    @Override

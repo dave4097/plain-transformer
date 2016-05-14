@@ -1,9 +1,7 @@
 package org.plaintransformer.flat;
 
 import org.plaintransformer.TransformFrom;
-import org.plaintransformer.TransformUsingAnnotationsOnly;
 
-@TransformUsingAnnotationsOnly
 public class CustomerDTO {
 
    @TransformFrom("#name")

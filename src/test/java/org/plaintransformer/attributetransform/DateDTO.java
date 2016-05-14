@@ -4,7 +4,7 @@ import org.plaintransformer.TransformFrom;
 
 public class DateDTO {
 
-   @TransformFrom(value = "#date", attributeTransformer = StringToLocalDateTransformer.class)
+   @TransformFrom(value = "#date", attributeTransformer = LocalDateToStringTransformer.class)
    private String date;
 
    public DateDTO() {}

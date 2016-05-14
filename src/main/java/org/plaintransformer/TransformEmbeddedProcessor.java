@@ -29,7 +29,7 @@ class TransformEmbeddedProcessor extends AnnotationProcessor<TransformEmbedded> 
          throws IllegalAccessException, InstantiationException {
       @SuppressWarnings("unchecked")
       Class<Object> type = (Class<Object>) destinationField.getType();
-      To<Object> to = new To<>(type, getOverrides(destinationField), context);
+      To<Object> to = new To<>(type, getOverrides(destinationField), context.config());
       return to.from(sourceValues);
    }
 

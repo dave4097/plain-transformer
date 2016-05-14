@@ -5,7 +5,7 @@ import org.plaintransformer.AttributeTransformer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class StringToLocalDateTransformer implements AttributeTransformer<LocalDate, String> {
+public class LocalDateToStringTransformer implements AttributeTransformer<LocalDate, String> {
 
    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

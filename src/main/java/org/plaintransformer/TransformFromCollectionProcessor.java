@@ -33,7 +33,7 @@ class TransformFromCollectionProcessor extends AnnotationProcessor<TransformFrom
          Class<?> entryType = (Class<?>) collectionEntryType.getActualTypeArguments()[0];
 
          transformedCollection = collectionToTransform.getClass().newInstance();
-         To<?> entryTo = new To<>(entryType, context);
+         To<?> entryTo = new To<>(entryType, context.config());
          for (Object entry : collectionToTransform) {
             transformedCollection.add(entryTo.from(entry));
          }
